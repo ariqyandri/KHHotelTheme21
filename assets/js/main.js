@@ -31,16 +31,32 @@
     }, 2000);
   });
 
-  var tooltipTriggerList = [].slice.call(
-    document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  // Navbar
+  const menu = document.querySelector(".menu-icon");
+  const mobileNav = document.querySelector("#menu");
+  menu.addEventListener("click", function () {
+    mobileNav.classList.toggle("open");
+  });
+  $(".parent").hover(
+    function () {
+      $(`#${this.id} > .sub-menu`).css({
+        width: $(`#${this.id} > a`).outerWidth(),
+      });
+      $(`#${this.id} > .sub-menu`).show();
+    },
+    function () {
+      $(".sub-menu").hide();
+    }
   );
-  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl);
-  });
+  //
 
-  var myCarousel = document.querySelector("#myCarousel");
-  var carousel = new bootstrap.Carousel(myCarousel, {
-    interval: 100,
-    wrap: true,
-  });
+  // Navbar
+  $(".wp-block-gallery").hide();
+  //
+
+  //
+  new Splide("#post-a-slider", {
+    rewind: true,
+  }).mount();
+  //
 })(jQuery);

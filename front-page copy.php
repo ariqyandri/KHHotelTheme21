@@ -6,7 +6,7 @@
     
 <!-- Home Headline -->
     <?php
-        get_template_part('template-parts/home-slider','home-slider');
+        get_template_part('template-parts/h-slider','slider');
     ?>
 <!---->
 
@@ -17,7 +17,7 @@
 <!-- Page Info -->
     
     <?php
-        get_template_part('template-parts/post-a','page-info');
+        get_template_part('template-parts/page-info','page-info');
     ?>
 
 <?php endwhile;?>
@@ -28,21 +28,19 @@
   <div class="home-rooms-title">
     <h1>Our Rooms</h1>
   </div>
-  <div class="splide" id="room-splide">
-	<div class="splide__track">
-		<ul class="splide__list">
+  <div class="home-rooms-section">
+    <div class="home-rooms-section-margin owl-carousel room-slider">
     <?php $loopb = new WP_Query( array( 'post_type' =>
     'rooms' ) ); ?>
     <?php while ( $loopb->have_posts() ) : $loopb->the_post(); ?>
-      
-      <li class="splide__slide"> <?php
+
+      <?php
           get_template_part('template-parts/display-room-card','room-card');
-      ?></li>   
+      ?>
 
     <?php endwhile;?>
     <?php wp_reset_postdata();?>
-		</ul>
-	</div>
+    </div>
   </div>
 </div>
 <!---->

@@ -32,36 +32,22 @@
     gtag('config', 'G-K05Y1FSWLS');
     </script>
     <!---->
+
+    <!-- Splide JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
+    <!--  -->
     <?php wp_head(); ?>
   </head>
 
   <body>
-    <header class="header text-center main-nav">
-      <nav class="navbar navbar-expand-md navbar-light bg-none">
-        <a aria-current="page" class="navbar-brand active" href="<?php echo get_home_url() ?>">
-          <img
-            class="logo"
-             src='<?php echo get_template_directory_uri()."/assets/images/logo.png" ?>'
-            alt="logo" />
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="navbar-collapse collapse" id="navbarNav">
-            <?php
-				wp_nav_menu(
-					array(
-						'menu' => 'primary',
-                        'container' => '', 
-                        'theme_location' => 'primary',
-                        'items_wrap' => '
-                        <div class="navbar-nav" style="width:100&#37;;">%3$s</div>' 
-                    ) 
-                ); 
-            ?>
-        </div>
-      </nav>
+    <header class="header">
+      <!-- Navbar -->
+        <?php
+          get_template_part('template-parts/navbar','navbar');
+        ?>
+      <!---->
     </header>
     <main class="main-content">
         <div class="page">

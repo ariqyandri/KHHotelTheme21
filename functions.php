@@ -16,10 +16,6 @@ function mlh_register_style(){
 
     wp_enqueue_style( 'style-fontawesome', "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css", array(), '5.13.0', 'all');
 
-    wp_register_style( 'style-owl-carousel', get_template_directory_uri()."/assets/css/owl.carousel.min.css", array());
-    
-    wp_enqueue_style( 'style-bootstrap', get_template_directory_uri()."/assets/css/bootstrap.min.css", array('style-normalize'));
-
     wp_enqueue_style( 'style', get_template_directory_uri()."/style.css", array('style-normalize'),'','all');
 }
 add_action( 'wp_enqueue_scripts', 'mlh_register_style' );
@@ -29,10 +25,6 @@ add_action( 'wp_enqueue_scripts', 'mlh_register_style' );
 function mlh_register_scripts() {
 	wp_enqueue_script('jquery',"https://code.jquery.com/jquery-3.4.1.slim.min.js", array(),'3.4.1', true);
 	
-    wp_enqueue_script('bootstrap-js',get_template_directory_uri()."/assets/js/bootstrap.min.js", array('jquery'), '5.0.0', true);
-	
-    wp_register_script('owl-carousel-js',get_template_directory_uri()."/assets/js/owl.carousel.min.js", array('jquery'), '2.3.4', true);
-
     wp_register_script('home-js',get_template_directory_uri()."/assets/js/home.js", array(), '2.3.4', true);
 
     wp_register_script('sights-js',get_template_directory_uri()."/assets/js/sights.js", array(), '2.3.4', true);
@@ -53,8 +45,6 @@ add_action( 'wp_enqueue_scripts', 'mlh_register_scripts' );
 //Enqueue Scripts
 function home_scripts() {
     if(get_the_title() == 'Home'){
-        wp_enqueue_style('style-owl-carousel');
-        wp_enqueue_script('owl-carousel-js');
         wp_enqueue_script('home-js');
     }
 }
@@ -152,3 +142,40 @@ function load_post_by_ajax_callback() {
     wp_die();
 }
 //
+
+//AJAX WOOCOMMERCE MODAL
+function modal_register_scripts() {
+    wp_enqueue_script('modal-script',get_template_directory_uri()."/js/modal.js", array(), '', true);
+    $script_data_array = array(
+        'ajaxurl' => admin_url( 'admin-ajax.php' ),
+        'security' => wp_create_nonce( 'view_post' ),
+    );
+    wp_localize_script( 'modal-script', 'blog', $script_data_array );
+  }
+  
+  add_action( 'wp_enqueue_scripts', 'modal_register_scripts' );
+  
+  function get_ajax_posts() {
+  check_ajax_referer('view_post', 'security');
+  $args = array(
+    'p' => $_POST['id'],
+    'post_type' => array('product','product_variation'),
+  );
+  $posts = new WP_Query( $args );
+  $response='';
+  if ($posts->have_posts()) {
+      while($posts->have_posts()) {
+          $posts->the_post();
+          $response .= get_template_part('template-parts/single-product','single-product');
+      }
+  }
+  wp_reset_postdata();
+  echo $response;
+  wp_die();
+  exit;
+  }
+  
+  // Fire AJAX action for both logged in and non-logged in users
+  add_action('wp_ajax_get_ajax_posts', 'get_ajax_posts');
+  add_action('wp_ajax_nopriv_get_ajax_posts', 'get_ajax_posts');
+  //

@@ -1,18 +1,10 @@
-<div class="home-carousel">
-  <div class="home-carousel-box">
-    <div
-      id="homeCarousel"
-      class="carousel slide carousel-fade"
-      data-bs-ride="carousel"
-    >
-      <div class="carousel-inner">
-        
-        <div class="carousel-item active">
+<div class=splide id="home-slider">
+	<div class="splide__track">
+		<ul class="splide__list">
             <?php $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full' );?>
-            <div class="display-home-hedline">
-                <div class="content-image">
-                    <img src="<?php echo $image[0];?>" alt="<?php the_title(); ?>" />
-                </div>
+            <li class="splide__slide">
+                <div class="splide__slide__container">
+                <img src="<?php echo $image[0];?>" alt="<?php the_title(); ?>" />
                 <div class="content-box">
                     <div class="content-info">
                         <h1><?php the_field('headline'); ?></h1>
@@ -20,7 +12,7 @@
                     <div id="home" class="book-now-float">
                         <button
                             id="home"
-                            class="book-now distributor"
+                            class="book-button distributor"
                             rel="noreferrer"
                             target="_blank"
                         >
@@ -28,47 +20,25 @@
                         </button>
                     </div>
                  </div>
-            </div>
-        </div>
-
-        <?php $loopb = new WP_Query( array( 'post_type' => 'slider' ) ); ?>
+                </div>
+            </li>
+        
+            <?php $loopb = new WP_Query( array( 'post_type' => 'slider' ) ); ?>
             <?php while ( $loopb->have_posts() ) : $loopb->the_post(); ?>
-            <div id="slider" class="carousel-item">
+            <li class="splide__slide">
+            <div class="splide__slide__container">
             <?php $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full' ); ?>
             <img id="bg"src="<?php echo $image[0];?>" alt="<?php the_title(); ?>" />
-            <div class="page-content">
-            <div class="slider-display">
-                <div class="display-content">
+            <div class="content-box">
+                <div class="content-info">
                 <h1><?php the_title(); ?></h1>
                 <?php the_content(); ?>
                 </div>
             </div>
             </div>
-            </div>
-
+            </li>
             <?php endwhile;?>
-        <?php wp_reset_postdata();?>
-
-      </div>
-      <button
-        class="carousel-control-prev"
-        type="button"
-        data-bs-target="#homeCarousel"
-        data-bs-slide="prev"
-      >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button
-        id="initiate-sight-carousel"
-        class="carousel-control-next"
-        type="button"
-        data-bs-target="#homeCarousel"
-        data-bs-slide="next"
-      >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
-  </div>
+            <?php wp_reset_postdata();?>
+		</ul>
+	</div>
 </div>
