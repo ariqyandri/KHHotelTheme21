@@ -1,9 +1,9 @@
 (function ($) {
-  var qv_modal = $("#quick-view-modal"),
-    qv_overlay = $(".quick-view-overlay"),
-    qv_content = $("#quick-view-content"),
-    qv_close =$("#quick-view-close"),
-    qv_wrapper = $(".wcqv-wrapper"),
+  var qv_modal = $("#qv_modal"),
+    qv_overlay = $(".qv_overlay"),
+    qv_content = $("#qv_content"),
+    qv_close = $("#qv_close"),
+    qv_wrapper = $(".qv_wrapper"),
     qv_wrapper_w = qv_wrapper.width(),
     qv_wrapper_h = qv_wrapper.height(),
     center_modal = function () {
@@ -31,37 +31,16 @@
       e.preventDefault();
       close_qv();
     });
-
-    // Close after add to cart
-    function runAfterElementExists(jquery_selector, callback) {
-      var checker = window.setInterval(function () {
-        if ($(jquery_selector).length) {
-          clearInterval(checker);
-          callback();
-        }
-      }, 250);
-    }
-
-    setInterval(() => {
-      runAfterElementExists(
-        "#quick-view-modal .added_to_cart.wc-forward",
-        function () {
-          close_qv();
-        }
-      );
-    }, 200);
     //
 
     var close_qv = function () {
       qv_modal.removeClass("open");
       qv_content.html("");
-      $("#quick-view-modal .wcqv-main").removeClass("show");
+      $("#qv_modal .qv_main").removeClass("show");
     };
   };
 
   close_modal_qv();
-
-  center_modal();
 
   $(".modalOpen").click(function () {
     qv_modal.addClass("open");
@@ -73,37 +52,69 @@
     };
 
     $.post(blog.ajaxurl, data, function (response) {
-      response = JSON.parse(response);
-      var gallery = response.gallery.map((img, i) => {
-        if (typeof img != "string") {
-          return "";
-        }
-        return `<div class="carousel-item ${i === 0 ? "active" : ""}">
-        <img src=${img} class="d-block w-100" alt="room-image" />
-      </div>`;
-      });
-      var facilities = response.facilities.map(({ name, icon }) => {
-        return `<div><img src=${icon} alt=${name}></img><p>${name}</p></div>`;
-      });
-      var policies = response.policies.map(({ title, description }) => {
-        return `<div><h3>${title}</h3><p>${description}</p></div>`;
-      });
-      $("#room-content h1").empty();
-      $("#room-content p").empty();
-      $("#room-price").empty();
-      $("#room-image").empty(); //add image
-      $("#room-facilities").empty();
-      $("#room-policies").empty();
-      $("#room-offer p").empty();
+      qv_content.html(response);
+      if (qv_content.html(response)) {
+        $("#qv_modal .qv_main").addClass("show");
+        
+        //Booking Room
+        var dateToString = (date) => {
+          var dd = date.getDate();
+          var mm = date.getMonth() + 1; //January is 0!
+          var yyyy = date.getFullYear();
+          if (dd < 10) {
+            dd = "0" + dd;
+          }
+          if (mm < 10) {
+            mm = "0" + mm;
+          }
+          return yyyy + "-" + mm + "-" + dd;
+        };
+        
+        var stringToDate = (string) => {
+          var value = string.split("-");
+          return new Date(value[0], value[1] - 1, value[2]);
+        };
+        
+        var editDate = (name, value) => {
+          return $(`#room_modal input[name^='${name}']`)
+            .attr("min", value)
+            .attr("value", value);
+        };
+        
+        var today = new Date();
+        editDate("start", dateToString(today));
+        
+        var tomorrow = new Date(today.getTime() + 24 * 60 * 60 * 1000);
+        editDate("end", dateToString(tomorrow));
 
-      $("#room-content h1").html(response.title);
-      $("#room-content p").html(response.content);
-      $("#room-price").html(response.price);
-      // $("#room-image").append(response.thumbnail);
-      $("#room-image").append(...gallery); //add image
-      $("#room-facilities").append(...facilities);
-      $("#room-policies").append(...policies);
-      $("#room-offer p").html(response.offer);
+        $("input[name^='start']").change(function () {
+          var startDate = stringToDate($(this).val());
+          var endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
+          editDate("end", dateToString(endDate));
+          console.log(endDate)
+        });
+
+        Mews.Distributor(
+          { configurationIds: ["942d3e9f-2347-4bc6-a69f-ab8a00d6b06b"] },
+          function (distributor) {
+            $("#booking-rooms.booking-submit").click(function (e) {
+              var start = new Date();
+              var end = new Date();
+              results = $("#room_modal #booking-form").serializeArray();
+              start = results.find(({ name }) => {
+                return name == "start";
+              })["value"];
+              end = results.find(({ name }) => {
+                return name == "end";
+              })["value"];
+              distributor.setStartDate(stringToDate(start));
+              distributor.setEndDate(stringToDate(end));
+              distributor.open();
+              distributor.showRates($("#room_modal").attr('room-id'));
+            });
+          }
+        );
+      }
     });
   });
 })(jQuery);

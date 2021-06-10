@@ -1,12 +1,26 @@
-<div class="popup-menu">
-  <button type="button" class="btn btn-secondary offer-button" data-bs-toggle="modal"  
-  data-bs-target="#offerModal">
-    <i data-bs-toggle="tooltip" 
-      data-bs-placement="bottom" 
-      title="Offers"
-      class="fas fa-ticket-alt"></i>
-  </button>
-  <?php get_template_part('template-parts/contact-popup','contact-popup'); ?>
-</div>
+<div id="circularMenu1" class="circular-menu circular-menu-left">
 
-<?php get_template_part('template-parts/display-offer','offer'); ?>
+  <a class="floating-btn" onclick="document.getElementById('circularMenu1').classList.toggle('active');">
+    <i class="far fa-comment-dots"></i>
+  </a>
+
+  <menu class="items-wrapper">
+    <?php $loopb = new WP_Query( array( 'post_type' =>
+    'contactinfo', 'tax_query' => array( array( 'taxonomy' => 'contacttype',
+    'field' => 'slug', 'terms' => 'popup', ) ) ) ); 
+    while ( $loopb->have_posts() ) : $loopb->the_post();?>
+
+    <a
+      class="menu-item"
+      href="<?php the_field('link'); ?>"
+      rel="noreferrer"
+      target="_blank"
+
+    >
+      <?php the_field('icon'); ?>
+    </a>
+    <?php endwhile;?>
+    <?php wp_reset_postdata();?>
+  </menu>
+
+</div>

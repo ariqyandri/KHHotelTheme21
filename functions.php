@@ -12,11 +12,7 @@ add_action('after_setup_theme','mlh_theme_support');
 
 //STYLES
 function mlh_register_style(){
-	wp_enqueue_style( 'style-normalize', get_template_directory_uri()."/assets/css/normalize.css", array());
-
-    wp_enqueue_style( 'style-fontawesome', "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css", array(), '5.13.0', 'all');
-
-    wp_enqueue_style( 'style', get_template_directory_uri()."/style.css", array('style-normalize'),'','all');
+     wp_enqueue_style( 'style', get_template_directory_uri()."/style.css", array(),'','all');
 }
 add_action( 'wp_enqueue_scripts', 'mlh_register_style' );
 //
@@ -31,13 +27,15 @@ function mlh_register_scripts() {
 
     wp_enqueue_script('script-js',get_template_directory_uri()."/assets/js/main.js", array(), '', true);
 
-	wp_register_script('custom-script', get_template_directory_uri(). '/assets/js/custom.js', array('jquery'), '', true);
+	wp_register_script('modal-script', get_template_directory_uri(). '/assets/js/modal.js', array('jquery'), '', true);
+    
     // Localize the script with new data
     $script_data_array = array(
         'ajaxurl' => admin_url( 'admin-ajax.php' ),
         'security' => wp_create_nonce( 'view_post' ),
     );
-    wp_localize_script( 'custom-script', 'blog', $script_data_array );
+    wp_localize_script( 'modal-script', 'blog', $script_data_array );
+    //
 }
 add_action( 'wp_enqueue_scripts', 'mlh_register_scripts' );
 //
@@ -59,7 +57,7 @@ add_action('wp_enqueue_scripts', 'sights_scripts');
 
 function custom_scripts() {
     if(get_the_title() == 'Home'||get_the_title() == 'Rooms'){
-        wp_enqueue_script('custom-script');
+        wp_enqueue_script('modal-script');
     }
 }
 add_action('wp_enqueue_scripts', 'custom_scripts');
@@ -87,95 +85,27 @@ add_action('init', 'mlh_menus');
 //
 
 // Ajax
-add_action('wp_ajax_load_post_by_ajax', 'load_post_by_ajax_callback');
-add_action('wp_ajax_nopriv_load_post_by_ajax', 'load_post_by_ajax_callback');
- 
-function load_post_by_ajax_callback() {
+add_action('wp_ajax_load_post_by_ajax', 'load_post_by_ajax_callback_new');
+add_action('wp_ajax_nopriv_load_post_by_ajax', 'load_post_by_ajax_callback_new');
+
+function load_post_by_ajax_callback_new() {
     check_ajax_referer('view_post', 'security');
     $args = array(
         'post_type' => 'rooms',
         'post_status' => 'publish',
         'p' => $_POST['id'],
     );
- 
     $posts = new WP_Query( $args );
- 
-    $arr_response = array();
+    $response='';
     if ($posts->have_posts()) {
- 
         while($posts->have_posts()) {
- 
             $posts->the_post();
-            
-            $terms = get_the_terms( $post->ID, 'facilities' );
-            
-            $facilities=array();
-
-            foreach($terms as $term) {
-                    $name = $term->name;
-                    $id = $term->term_id;
-                    $src = get_field('icon', 'facilities_'.$id );
-                    $facilities[]=array('name'=>$name,'id'=>$id,'icon'=>$src);
-            };
-
-            $gallery = array(get_field('gallery_image_one'),get_field('gallery_image_two'),get_field('gallery_image_three'),get_field('gallery_image_four'));
-            
-            $policies = array(array('title'=>get_field('policy_title'), 'description'=>get_field('policy_text')),array('title'=>get_field('policy_title_second'), 'description'=>get_field('policy_text_second')));
-            
-            $arr_response = array(
-                'title' => get_the_title(),
-                'content' => get_the_content(),
-				'facilities'=> $facilities,
-                'price' => get_field('price'),
-                'thumbnail'=> get_the_post_thumbnail($post->ID, 'medium'),
-                'gallery'=> $gallery,
-                'policies' => $policies,
-                'offer' => get_field('offer'),
-
-            );
+            $response .= get_template_part('template-parts/room-modal','room-modal');
         }
-        wp_reset_postdata();
     }
-    
-    echo json_encode($arr_response);
- 
+    wp_reset_postdata();
+    echo $response;
     wp_die();
+    exit;
 }
 //
-
-//AJAX WOOCOMMERCE MODAL
-function modal_register_scripts() {
-    wp_enqueue_script('modal-script',get_template_directory_uri()."/js/modal.js", array(), '', true);
-    $script_data_array = array(
-        'ajaxurl' => admin_url( 'admin-ajax.php' ),
-        'security' => wp_create_nonce( 'view_post' ),
-    );
-    wp_localize_script( 'modal-script', 'blog', $script_data_array );
-  }
-  
-  add_action( 'wp_enqueue_scripts', 'modal_register_scripts' );
-  
-  function get_ajax_posts() {
-  check_ajax_referer('view_post', 'security');
-  $args = array(
-    'p' => $_POST['id'],
-    'post_type' => array('product','product_variation'),
-  );
-  $posts = new WP_Query( $args );
-  $response='';
-  if ($posts->have_posts()) {
-      while($posts->have_posts()) {
-          $posts->the_post();
-          $response .= get_template_part('template-parts/single-product','single-product');
-      }
-  }
-  wp_reset_postdata();
-  echo $response;
-  wp_die();
-  exit;
-  }
-  
-  // Fire AJAX action for both logged in and non-logged in users
-  add_action('wp_ajax_get_ajax_posts', 'get_ajax_posts');
-  add_action('wp_ajax_nopriv_get_ajax_posts', 'get_ajax_posts');
-  //

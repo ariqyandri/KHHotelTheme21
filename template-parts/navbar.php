@@ -1,3 +1,5 @@
+<div class="navbar_background">
+</div>
 <nav id="navbar">
     <div class="logo">
             <a href="<?php echo get_home_url() ?>">
@@ -12,7 +14,7 @@
     </ul>
     <div class="nav-button">
         <button class="distributor book-button">
-        Book Now
+        <p>Book Now</p>
         </button>
     </div>
 </nav>

@@ -24,8 +24,6 @@
     >
     <li>
       <button        
-        data-bs-toggle="tooltip" 
-        data-bs-placement="left" 
         title="<?php the_title(); ?>">        
         <?php the_field('icon'); ?>
       </button>

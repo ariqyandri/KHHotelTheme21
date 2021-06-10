@@ -10,41 +10,29 @@
     ?>
 <!---->
 
-
+<!-- Booking Form -->
+    <?php
+        get_template_part('template-parts/booking-form','booking-from');
+    ?>
+<!---->
 
 <div class="page-content">
 
 <!-- Page Info -->
     
     <?php
-        get_template_part('template-parts/post-a','page-info');
+        get_template_part('template-parts/post','post');
     ?>
 
 <?php endwhile;?>
 <!---->
 
-<!--Display Rooms Home-->
-<div class="home-rooms-display">
-  <div class="home-rooms-title">
-    <h1>Our Rooms</h1>
-  </div>
-  <div class="splide" id="room-splide">
-	<div class="splide__track">
-		<ul class="splide__list">
-    <?php $loopb = new WP_Query( array( 'post_type' =>
-    'rooms' ) ); ?>
-    <?php while ( $loopb->have_posts() ) : $loopb->the_post(); ?>
-      
-      <li class="splide__slide"> <?php
-          get_template_part('template-parts/display-room-card','room-card');
-      ?></li>   
+<?php wp_reset_postdata();?>
 
-    <?php endwhile;?>
-    <?php wp_reset_postdata();?>
-		</ul>
-	</div>
-  </div>
-</div>
+<!--Display Rooms Home-->
+<?php
+  get_template_part('template-parts/room-slider','room-slider');
+?>
 <!---->
 
 <!-- Display Post -->
@@ -55,43 +43,20 @@
 'slug', 'terms' => $post_slug, ) ) ) ); ?>
 <?php while ( $loopb->have_posts() ) : $loopb->the_post();?>
     
-    <div id="<?php echo $post_slug?>" class="post-display">
         <?php
-            get_template_part('template-parts/display-post','display-post');
+            get_template_part('template-parts/post','post');
         ?>
-    </div>
 
 <?php endwhile;?>
 <?php wp_reset_postdata();?>
 <!---->
 
-<?php wp_reset_postdata();?>
 
 <!-- Guestbook Entries -->
-<div class="guestbook-entries-display">
-  <div class="guestbook-entries-title">
-    <h1>Guestbook</h1>
-  </div>
-  <div class="display-guestbook-entries">
-    <div class="content-info">
-      <div class="owl-carousel owl-theme guestbook-slider">
-
-        <?php $loopb = new WP_Query( array( 'post_type' =>'guestbook' ) ); ?>
-        <?php while ( $loopb->have_posts() ) : $loopb->the_post(); ?>
-        <?php $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ),'medium' ); ?>
-        
-        <div class="content-item">
-          <h2><?php the_content(); ?></h2>
-          <p><strong><?php the_field('name'); ?></strong> | <?php the_field('date'); ?></p>
-        </div>
-        
-        <?php endwhile;?>
-
-      </div>
-    </div>
-  </div>
-</div>
-<?php wp_reset_postdata();?>
+<?php
+  get_template_part('template-parts/guestbook-slider','guestbook-slider');
+?>
+<!---->
 
 
 <?php

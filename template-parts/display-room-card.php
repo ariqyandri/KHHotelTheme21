@@ -16,7 +16,7 @@ $post_slug = $post->post_name; ?>
     </div>
   </div>
   <div class="content-image show-room" href="#<?php echo $post_slug;?>">
-  <button data-id="<?php the_ID(); ?>" class="view-post" data-bs-toggle="modal" data-bs-target="#postModal">
+  <button data-id="<?php the_ID(); ?>" class="view-post modalOpen" data-bs-toggle="modal" data-bs-target="#postModal">
     <img src="<?php echo $image[0];?>" alt="<?php the_title(); ?>"/>
   </button>
   </div>

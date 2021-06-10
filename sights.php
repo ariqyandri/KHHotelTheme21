@@ -8,22 +8,18 @@
 
 <?php get_header(); ?>
 
-<!-- Page Title -->
+<!-- Sights Carousel -->
+<?php while ( have_posts() ) : the_post(); ?> 
+
+    <?php 
+        get_template_part('template-parts/sights-slider','sights-slider');
+    ?> 
+
+
 <div class="page-title">
     <h1><?php the_title(); ?></h1>
 </div>
 <?php wp_reset_postdata();?>
-<!---->
-
-<!-- Sights Carousel -->
-<?php while ( have_posts() ) : the_post(); ?> 
-
-    <?php if (get_field('image_1')){
-        get_template_part('template-parts/display-sights-carousel','sights-carousel');}
-        else{
-        }
-    ?> 
-
 <!---->
 
 <!-- Content Margin -->

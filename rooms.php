@@ -39,7 +39,7 @@
       <?php while ( $loopb->have_posts() ) : $loopb->the_post(); ?>
         
         <?php
-            get_template_part('template-parts/display-room-card','room-card');
+            get_template_part('template-parts/room-card','card');
         ?>
 
       <?php endwhile;?>

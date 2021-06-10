@@ -7,21 +7,27 @@ Author: Muhamad Ariqyandri
 */
 
 //**Properties**//
-// colors
+// Colors //
 $white: #ffff;
-$gold: #d1ba5d;
 $lightgold: #ece8d7;
 $black: #333;
-$red-opacity: rgba(219, 0, 42, 0.92);
-$red: #db002a;
-$jetblack: #000000;
-$lightgray: #8d8d8d;
-$submenu: #f8f5f2;
-
-$primary: green;
+$background: #e5f3cd;
+$primary: #008000;
 $primarydarker: darkgreen;
 $primarydarkest: rgb(0, 73, 0);
+
+//Post A
+$postText: darkgreen;
+$postTextBox: white;
 //
+
+//font
+$pFont: "Raleway", sans-serif;
+$headerFont: "Montserrat", sans-serif;
+//
+
+////
+
 //**//
 
 //**Normalize**//
@@ -152,7 +158,109 @@ table {
 //**//
 
 //**Styling**//
+//wp edit
+.wp-block-gallery {
+  display: none;
+}
+.wp-block-buttons {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  .wp-block-button {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .wp-block-button__link {
+      all: initial;
+      font-family: "Raleway", sans-serif;
+    }
+  }
+}
+//
+
 //Main
+html {
+  overflow-x: hidden;
+}
+
+html,
+body {
+  background-color: $background;
+  color: $black;
+  height: 100%;
+}
+
+html,
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: $headerFont;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.8rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+p {
+  font-family: $pFont;
+  font-size: 1.5rem;
+  line-height: 1.5;
+}
+
+a {
+  color: $primary;
+}
+
+a:hover {
+  color: $primarydarker;
+  font-weight: bolder;
+}
+
+a:active {
+  color: $primarydarkest;
+  font-weight: bold;
+}
+
+i {
+  font-size: 1.5rem;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  main.main-content {
+    .page {
+      min-height: 100vh;
+      margin-bottom: 4rem;
+    }
+  }
+  footer {
+    flex-shrink: 0;
+  }
+}
+
+.page-content {
+  max-width: 1400px;
+  margin: auto;
+  z-index: 0;
+}
 
 //
 
@@ -162,8 +270,34 @@ table {
   margin: auto;
   position: fixed;
   z-index: 100;
+  top: 0;
+  transition: top 0.6s ease-in-out;
 }
 //
+
+//Button
+.default-button {
+  max-height: 50px;
+  min-height: 50px;
+  max-width: 200px;
+  width: 100%;
+  font-size: 1rem;
+  text-transform: uppercase;
+  color: $white;
+  border-radius: 1.5rem;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background: none;
+  transition: 0.2s ease-in-out;
+}
+.default-button:hover {
+  background-color: $primary;
+  color: $white;
+}
+////
 
 //Book Button
 .book-button {
@@ -173,26 +307,42 @@ table {
   width: 100%;
   font-size: 1rem;
   text-transform: uppercase;
-  color: $white;
+  color: $primary;
   border-radius: 1.5rem;
-  background: rgb(34, 195, 42);
-  background: linear-gradient(
-    0deg,
-    rgba(34, 195, 42, 1) 0%,
-    rgba(165, 255, 132, 1) 100%
-  );
   border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background: none;
+  border: 2px solid $primary;
+  transition: 0.2s ease-in-out;
+}
+.book-button:hover {
+  background-color: $primary;
+  color: $white;
 }
 ////
 
 //NavBar
+// .navbar_background {
+//   background-color: $primary;
+//   opacity: 0.5;
+//   width: 100%;
+//   height: 70px;
+//   z-index: -2;
+// }
 #navbar {
   max-width: 1400px;
-  margin: 20px auto 0;
+  margin: 0 auto;
   padding: 0 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: white;
+  border-radius: 0 0 1rem 1rem;
+  box-sizing: border-box;
+  box-shadow: 0 3px 1rem 0 rgba(0, 0, 0, 0.15);
   .menu-icon {
     display: none;
   }
@@ -201,6 +351,7 @@ table {
     padding: 0.5rem 1rem;
     background-color: $white;
     border-radius: 1.5rem;
+    z-index: 100;
     img {
       max-height: 5rem;
       margin: auto;
@@ -208,19 +359,24 @@ table {
   }
   .nav-button {
     width: 15%;
+    z-index: 100;
+    p {
+      font-size: 1rem;
+      font-weight: bolder;
+    }
   }
   #menu {
     max-height: 50px;
     width: 60%;
-    z-index: 100;
-    background: $primary;
     border-radius: 1.5rem;
     padding: 0.5rem;
+    z-index: 100;
     #menu-navbar {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
+      transition: 0.2s ease-in-out;
       .parent {
         flex-grow: 1;
         flex-basis: 100%;
@@ -232,12 +388,13 @@ table {
         align-items: center;
         > a {
           font-size: 1rem;
-          line-height: 200%;
+          line-height: 2;
+          font-weight: 500;
           text-transform: uppercase;
           width: 60%;
           padding: 0 1rem;
-          border-radius: 1em;
-          color: $white;
+          border-radius: 1rem;
+          color: $primary;
         }
       }
       .parent.menu-item-has-children {
@@ -245,7 +402,7 @@ table {
           border-radius: 1em 1em 0 0;
         }
         > a::after {
-          content: "↓";
+          content: " ↓";
         }
         .sub-menu {
           display: none;
@@ -254,7 +411,7 @@ table {
           position: absolute;
           background-color: white;
           border-radius: 0 0 1em 1em;
-
+          box-shadow: 0 3px 1rem 0 rgba(0, 0, 0, 0.2);
           .child {
             line-height: 2;
             a {
@@ -269,9 +426,8 @@ table {
       .parent:hover,
       .parent:active {
         > a {
-          background: $white;
-
-          color: $primary;
+          color: $white;
+          background: $primary;
         }
         .sub-menu {
           // display: block;
@@ -322,6 +478,74 @@ table {
 
 //Home Slider
 #home-slider {
+  z-index: 0;
+  .content-box {
+    height: 100%;
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 0;
+
+    h1 {
+      max-width: 50%;
+      font-size: 4.5rem;
+      font-weight: bolder;
+      color: white;
+    }
+    p {
+      margin-top: 2rem;
+      max-width: 60%;
+      color: white;
+    }
+    .wp-block-buttons {
+      margin-top: 2rem;
+      .wp-block-button {
+        .wp-block-button__link {
+          color: $white;
+          text-transform: uppercase;
+          font-weight: bolder;
+        }
+      }
+      .default-button {
+        border: 0.2rem solid $primary;
+      }
+    }
+    @media only screen and (max-width: 1400px) {
+      width: 90%;
+    }
+  }
+  .splide__arrows {
+    height: 100%;
+    width: 100%;
+    max-width: 1400px;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    .splide__arrow {
+      height: 50px;
+      width: 50px;
+      opacity: 1;
+      background-color: white;
+      fill: $primary;
+    }
+    .splide__arrow--prev {
+      left: 0%;
+    }
+    .splide__arrow--next {
+      right: 0%;
+    }
+  }
+}
+////
+
+//Sight Slider
+#sight-slider {
   .content-box {
     height: 100%;
     width: 100%;
@@ -333,33 +557,937 @@ table {
     h1 {
       max-width: 50%;
       font-size: 4.5rem;
+      font-weight: bolder;
       color: white;
     }
-    p{
+    p {
+      margin-top: 2rem;
       max-width: 60%;
-      font-size: 1rem;
       color: white;
     }
-    button {
-      max-width: 200px;
+    .wp-block-buttons {
+      margin-top: 2rem;
+      .wp-block-button {
+        .wp-block-button__link {
+          color: $white;
+          text-transform: uppercase;
+          font-weight: bolder;
+        }
+      }
+      .default-button {
+        border: 0.2rem solid $primary;
+      }
+    }
+    @media only screen and (max-width: 1400px) {
+      width: 90%;
     }
   }
-  .splide__arrow {
-    height: 50px;
-    width: 50px;
-    opacity: 1;
-    background-color: rgba(255, 255, 255, 0.5);
-    fill: $white;
-    svg {
+  .splide__arrows {
+    height: 100%;
+    width: 100%;
+    max-width: 1400px;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    .splide__arrow {
+      height: 50px;
+      width: 50px;
+      opacity: 1;
+      background-color: white;
+      fill: $primary;
+    }
+    .splide__arrow--prev {
+      left: 0%;
+    }
+    .splide__arrow--next {
+      right: 0%;
     }
   }
-  .splide__arrow--prev {
-    left: 10%;
+}
+//
+
+//Post Default (A)
+.post {
+  max-width: 1400px;
+  margin: 10vh auto;
+  .post_img {
+    max-width: 1400px;
+    margin: auto;
+    .splide__arrows {
+      height: 100%;
+      width: 100%;
+      max-width: 1400px;
+      margin: auto;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      .splide__arrow {
+        height: 50px;
+        width: 50px;
+        opacity: 1;
+        background-color: $white;
+        fill: $primary;
+      }
+      .splide__arrow--prev {
+        left: 0%;
+      }
+      .splide__arrow--next {
+        right: 0%;
+      }
+    }
+    .splide__track {
+      .splide__list {
+        transform: none !important;
+        margin: auto !important;
+        border-radius: 1rem;
+        box-shadow: 0 3px 3rem 0 rgba(0, 0, 0, 0.08);
+        img {
+          border-radius: 1rem;
+          box-shadow: 0 3px 3rem 0 rgba(0, 0, 0, 0.08);
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
   }
-  .splide__arrow--next {
-    right: 10%;
+  .post_text {
+    border-radius: 1rem;
+    background-color: $postTextBox;
+    padding: 100px 0;
+    margin-top: -3rem;
+    box-shadow: 0 3px 3rem 0 rgba(0, 0, 0, 0.08);
+    .post_text-box {
+      max-width: 1200px;
+      margin: auto;
+      h1 {
+        color: $postText;
+        font-weight: bold;
+      }
+      h2 {
+        color: $postText;
+        font-style: italic;
+        line-height: 3;
+      }
+      p {
+        color: $postText;
+      }
+    }
   }
 }
 ////
+
+//Post B
+#post-b {
+  max-width: 1400px;
+  width: 100%;
+  margin: 10vh auto;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  align-items: stretch;
+  .post_features {
+    width: 50%;
+    margin: 1%;
+    align-self: stretch;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    z-index: 2;
+    .post_feature {
+      box-sizing: border-box;
+      width: 46%;
+      height: 46%;
+      margin: 2%;
+      padding: 1rem;
+      border-radius: 1rem;
+      background-color: $primary;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      img {
+        max-width: 70px;
+      }
+      p {
+        color: $white;
+        text-align: center;
+      }
+    }
+  }
+  .post_text {
+    width: 65%;
+    background-color: $postTextBox;
+    margin-top: unset;
+    box-shadow: 0 3px 3rem 0 rgba(0, 0, 0, 0.08);
+    padding: 100px;
+    box-sizing: border-box;
+    .post_text-box {
+      max-width: 100%;
+      h1 {
+        color: $postText;
+        font-weight: bold;
+      }
+      h2 {
+        color: $postText;
+        line-height: 3;
+      }
+      p {
+        margin-top: 2rem;
+        color: $postText;
+      }
+      p:last-child {
+        display: none;
+      }
+    }
+  }
+}
+////
+
+//Room Modal
+#room_modal {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  border-radius: 1rem;
+  background-color: $white;
+  padding-bottom: 4rem;
+  margin-bottom: 4rem;
+  .modal_description {
+    display: flex;
+    flex-direction: row;
+    .modal_image {
+      width: 50%;
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 1rem;
+      }
+    }
+    .modal_info {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem 2rem;
+      h1 {
+        font-size: 3rem;
+        font-weight: bold;
+        color: $primary;
+      }
+      p {
+        font-size: 1.3rem;
+        color: $primary;
+      }
+      .modal_price {
+        margin: 2rem 0;
+        color: $white;
+        font-weight: bold;
+        padding: 1rem;
+        background-color: $primary;
+        border-radius: 1rem;
+        font-style: italic;
+        width: fit-content;
+      }
+    }
+  }
+  .modal_facilities {
+    margin-top: 2rem;
+    padding: 0 3rem;
+    h2 {
+      font-weight: bold;
+      font-style: italic;
+      color: $primary;
+    }
+    .facilities {
+      max-width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      padding-top: 1rem;
+      .facility {
+        box-sizing: border-box;
+        height: 120px;
+        width: 120px;
+        border-radius: 1rem;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        background-color: $primary;
+        margin: 0 1rem;
+        img {
+          width: 80%;
+          filter: brightness(0) invert(1);
+        }
+        p {
+          font-size: 1rem;
+          text-align: center;
+          line-height: 1.2;
+          color: white;
+        }
+      }
+      .facility:hover {
+        p {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+  .modal_policies {
+    margin-top: 2rem;
+    padding: 0 3rem;
+    h2 {
+      font-weight: bold;
+      font-style: italic;
+      color: $primary;
+    }
+    .policies {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding-top: 1rem;
+      .policy {
+        max-width: 48%;
+        h3 {
+          font-weight: bold;
+          font-size: 1.5rem;
+          color: $primary;
+        }
+        p {
+          margin-top: 1rem;
+          font-size: 1.3rem;
+          color: $primary;
+        }
+      }
+    }
+  }
+  .modal_booking {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+    padding: 0 3rem;
+    .text {
+      width: 70%;
+      line-height: 1.8;
+      font-style: italic;
+      font-weight: bold;
+      font-size: 2rem;
+      text-align: center;
+      color: $primary;
+    }
+  }
+}
+//
+
+//// Modal
+#qv_modal {
+  position: fixed;
+  visibility: hidden;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1400;
+  opacity: 0;
+  text-align: center;
+  -webkit-transition: all 0.1s;
+  -moz-transition: all 0.1s;
+  transition: all 0.1s;
+  .qv_overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8);
+  }
+  .qv_wrapper {
+    display: inline-block;
+    vertical-align: middle;
+    visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden;
+    text-align: left;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    // max-height: 80vh !important;
+    max-width: 1200px !important;
+    height: 100% !important;
+    width: 90% !important;
+    overflow: hidden !important;
+  }
+  .qv_main {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-transition: opacity 0.4s ease-in-out;
+    -moz-transition: opacity 0.4s ease-in-out;
+    transition: opacity 0.4s ease-in-out;
+    -webkit-box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+    box-shadow: none !important;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    padding-right: 17px; /* Increase/decrease this value for cross-browser compatibility */
+    box-sizing: content-box; /* So the width will be 100% + 17px */
+    #qv_close {
+      opacity: 0;
+      fill: $primary;
+      border-radius: 50%;
+      text-decoration: none;
+    }
+
+    #qv_close:hover {
+      opacity: 1;
+      transition: all 0.2s ease;
+      -webkit-transition: all 0.2s ease;
+      -moz-transition: all 0.2s ease;
+      -ms-transition: all 0.2s ease;
+    }
+  }
+  .qv_main.show {
+    background-color: none;
+    #qv_close {
+      align-self: flex-end;
+      top: 0;
+      right: 0;
+      margin: 1rem 0;
+      min-height: 50px;
+      width: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 1;
+      background-color: $white;
+      fill: $primary;
+    }
+  }
+  .qv_main:after,
+  .qv_main:before {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+#qv_modal:before {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  height: 100%;
+  width: 0;
+}
+
+#qv_modal.open,
+#qv_modal.open .qv_wrapper {
+  visibility: visible;
+  opacity: 1;
+}
+
+#qv_modal.open .qv_main {
+  opacity: 1;
+  height: 100%;
+  overflow-y: auto;
+  position: relative;
+  background-color: none;
+}
+
+@media (max-width: 480px) {
+}
+////
+
+//Room Card
+#room_card {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  z-index: 100;
+  height: 600px;
+  max-width: 350px;
+  margin: auto;
+  box-shadow: 0 3px 3rem 0 rgba(0, 0, 0, 0.08);
+  border-radius: 1rem;
+  pointer-events: auto;
+  cursor: pointer;
+  .card_image {
+    height: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    border-radius: 1rem 1rem 0 0;
+    img {
+      object-fit: cover;
+      min-height: 100%;
+      max-height: 100%;
+      border-radius: 1rem 1rem 0 0;
+    }
+  }
+  .card_button {
+    border-radius: 0.5rem;
+    background-color: $primary;
+    padding: 1rem;
+    position: absolute;
+    right: 10%;
+    top: -0.5rem;
+    h2 {
+      color: $white;
+      font-style: italic;
+    }
+  }
+  .card_info {
+    height: fit-content;
+    background-color: $white;
+    border-radius: 0 0 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem 0;
+    h1 {
+      padding: 0 2rem;
+      font-size: 1.8rem;
+      line-height: 1.2em;
+      transition: all 0.1s ease;
+      font-weight: bolder;
+    }
+    .card_facilities {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+    }
+  }
+}
+#room_card:hover {
+  .card_button {
+    h2 {
+      transition: all 0.2s ease-in-out;
+      font-weight: bold;
+    }
+  }
+}
+//
+
+//Room Slider
+#room-slider_section {
+  .room-slider_title {
+    h1 {
+      color: $primary;
+      font-weight: bold;
+    }
+    p {
+      margin-top: 0.5rem;
+    }
+  }
+  .room-slider_box {
+    margin-top: 2rem;
+    .splide__track {
+      max-width: 1200px;
+      margin: auto;
+      overflow: visible;
+    }
+    .splide__arrows {
+      height: 100%;
+      width: 100%;
+      max-width: 1400px;
+      margin: auto;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      .splide__arrow {
+        height: 50px;
+        width: 50px;
+        opacity: 1;
+        background-color: $white;
+        fill: $primary;
+      }
+      .splide__arrow--prev {
+        left: 0%;
+      }
+      .splide__arrow--next {
+        right: 0%;
+      }
+    }
+    .splide__pagination {
+      display: none;
+    }
+  }
+}
+//
+
+//Guestbook Slider
+#guestbook-slider_section {
+  .guestbook-slider_title {
+    h1 {
+      color: $primary;
+      font-weight: bold;
+    }
+  }
+  .guestbook-slider_box {
+    margin-top: 2rem;
+    .splide {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: center;
+      .splide__track {
+        width: 80%;
+        max-width: 1200px;
+        .guestbook-slider_display {
+          border-radius: 1rem;
+          background-color: $white;
+          padding: 2rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          p {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex-grow: 1;
+          }
+          h4 {
+            text-align: end;
+            font-size: 1rem;
+          }
+        }
+      }
+      .splide__pagination {
+        display: none;
+      }
+      .splide__arrows {
+        position: relative;
+        flex-grow: 1;
+        .splide__arrow {
+          height: 50px;
+          width: 50px;
+          opacity: 1;
+          background-color: $white;
+          fill: $primary;
+        }
+      }
+    }
+  }
+}
+
+// Contact Popup https://codepen.io/seyedi/embed/YXEqwB?height=316&theme-id=0&default-tab=result
+.circular-menu {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 100;
+  .floating-btn {
+    display: block;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background-color: $primary;
+    box-shadow: 0 2px 5px 0 hsla(0, 0%, 0%, 0.26);
+    color: hsl(0, 0%, 100%);
+    text-align: center;
+    line-height: 3.9;
+    cursor: pointer;
+    outline: 0;
+    z-index: 100;
+  }
+  .floating-btn:active {
+    box-shadow: 0 4px 8px 0 hsla(0, 0%, 0%, 0.4);
+  }
+  .floating-btn:hover {
+    background-color: $primarydarker;
+  }
+  .floating-btn i {
+    font-size: 1.5rem;
+    transition: transform 0.2s;
+  }
+  .items-wrapper {
+    padding: 0;
+    margin: 0;
+  }
+  .menu-item {
+    position: absolute;
+    top: 0.15rem;
+    left: 0.15rem;
+    z-index: -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: hsl(0, 0%, 100%);
+    font-size: 1.3rem;
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 50%;
+    text-align: center;
+    background-color: $primary;
+    transition: transform 0.3s ease, background 0.2s ease;
+  }
+  .menu-item:hover {
+    background-color: $primarydarker;
+  }
+}
+
+.circular-menu.active {
+  .floating-btn {
+    box-shadow: inset 0 0 3px hsla(0, 0%, 0%, 0.3);
+  }
+  .floating-btn i {
+    font-weight: bolder;
+  }
+  .menu-item {
+    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .menu-item:nth-child(1) {
+    transform: translate3d(0, -5rem, 0);
+  }
+  .menu-item:nth-child(2) {
+    transform: translate3d(-3.5rem, -3.5rem, 0);
+  }
+  .menu-item:nth-child(3) {
+    transform: translate3d(-5rem, 0, 0);
+  }
+  .menu-item:nth-child(4) {
+    transform: translate3d(-7em, 1em, 0);
+  }
+}
+
+.circular-menu.active:after {
+  transform: scale3d(5.5, 5.5, 1);
+  transition-timing-function: cubic-bezier(0.68, 1.55, 0.265, 1);
+}
+//
+
+//Booking Form
+#booking-form {
+  width: 100%;
+  max-width: 900px;
+  height: 200px;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: $white;
+  z-index: 2;
+  position: relative;
+  border-radius: 1rem;
+  .input_start,
+  .input_end {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 1rem;
+    background-color: $primary;
+    padding: 1rem;
+    label {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 30%;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: $white;
+    }
+    .input_box {
+      flex-grow: 1;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      ::-webkit-calendar-picker-indicator {
+        filter: invert(26%) sepia(81%) saturate(1935%) hue-rotate(97deg)
+          brightness(80%) contrast(112%);
+      }
+      input {
+        width: 80%;
+        margin: auto;
+        font-family: $pFont;
+        color: $primary;
+        fill: $primary;
+        font-size: 1.5rem;
+        padding: 0.5rem;
+        border-radius: 1rem;
+        border: none;
+      }
+    }
+  }
+  .input_start:hover,
+  .input_end:hover {
+    label {
+      border-bottom: 2px solid $white;
+    }
+  }
+  .input_button {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem;
+    .book-button {
+      max-width: unset;
+      max-height: unset;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+#booking-form.booking-page {
+  margin-top: -100px;
+}
+#booking-form.booking-rooms {
+  margin-top: 2rem;
+}
+//
+
+//**//
+
+// * Hover* //
+/* Grow */
+.hvr-grow {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+}
+.hvr-grow:hover,
+.hvr-grow:focus,
+.hvr-grow:active {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+//
+
+/* Sweep To Right - Room Card */
+.hvr-sweep-to-right {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  position: relative;
+  -webkit-transition-property: color;
+  transition-property: color;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  border-radius: 0 0 1rem 1rem;
+}
+.hvr-sweep-to-right:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: $primary;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transform-origin: 0 50%;
+  transform-origin: 0 50%;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+  border-radius: 0 0 1rem 1rem;
+}
+#room_card:hover .hvr-sweep-to-right,
+#room_card:focus .hvr-sweep-to-right,
+#room_card:active .hvr-sweep-to-right {
+  h1 {
+    color: white !important;
+  }
+  img {
+    transition: all 0.3s ease-out;
+    filter: brightness(0) invert(1);
+  }
+}
+#room_card:hover .hvr-sweep-to-right::before,
+#room_card:focus .hvr-sweep-to-right::before,
+#room_card:active .hvr-sweep-to-right::before {
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+}
+//
+
+/* Sweep To Right - Facility */
+.post_features {
+  .hvr-sweep-to-right {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    position: relative;
+    -webkit-transition-property: color;
+    transition-property: color;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    border-radius: 1rem 1rem;
+  }
+  .hvr-sweep-to-right:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: $white;
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
+    -webkit-transform-origin: 0 50%;
+    transform-origin: 0 50%;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+    border-radius: 1rem 1rem;
+  }
+  .hvr-sweep-to-right:hover,
+  .hvr-sweep-to-right:focus,
+  .hvr-sweep-to-right:active {
+    p {
+      color: $primary !important;
+    }
+    img {
+      transition: all 0.3s ease-out;
+      filter: invert(26%) sepia(81%) saturate(1935%) hue-rotate(97deg)
+        brightness(60%) contrast(112%);
+    }
+  }
+  .hvr-sweep-to-right:hover::before,
+  .hvr-sweep-to-right:focus::before,
+  .hvr-sweep-to-right:active::before {
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+  }
+}
+//
 
 //**//

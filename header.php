@@ -15,6 +15,7 @@
       rel="shortcut icon"
       href="<?php echo $logo[0] ?>"
     />	
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
@@ -22,6 +23,7 @@
       rel="stylesheet"
     />
     <!---->
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-K05Y1FSWLS"></script>
     <script>
@@ -38,6 +40,10 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
     <!--  -->
+
+    <script src="https://www.mews.li/distributor/distributor.min.js"></script>
+
+
     <?php wp_head(); ?>
   </head>
 

@@ -1,4 +1,5 @@
 (function ($) {
+  //Mews
   (function (m, e, w, s) {
     c = m.createElement(e);
     c.onload = function () {
@@ -11,6 +12,7 @@
   })(document, "script", "https://www.mews.li/distributor/distributor.min.js", [
     ["942d3e9f-2347-4bc6-a69f-ab8a00d6b06b"],
   ]);
+  //
 
   $(document).ready(function () {
     window.setTimeout(function () {
@@ -48,15 +50,30 @@
       $(".sub-menu").hide();
     }
   );
+  var prevScrollpos = window.pageYOffset;
+  window.onscroll = function () {
+    var currentScrollPos = window.pageYOffset;
+    if (prevScrollpos > currentScrollPos) {
+      $(".header").css({ top: 0 });
+    } else {
+      $(".header").css({ top: "-100px" });
+    }
+    prevScrollpos = currentScrollPos;
+  };
   //
 
-  // Navbar
+  // Gallery
   $(".wp-block-gallery").hide();
   //
 
-  //
-  new Splide("#post-a-slider", {
+  // Slider
+  new Splide("#post-slider", {
+    type: "fade",
     rewind: true,
+    height: "50vh",
+    autoWidth: true,
+    focus: "center",
+    perPage: 1,
   }).mount();
   //
 })(jQuery);

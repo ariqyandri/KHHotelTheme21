@@ -1,11 +1,11 @@
-<div id="quick-view-modal">
-	<div class="quick-view-overlay"></div>
-	<div class="wcqv-wrapper">
-		<div class="wcqv-main">
-			<div class="wcqv-head">
-				<a href="#" id="quick-view-close" class="wcqv-close">X</a>
-			</div>
-			<div id="quick-view-content" >
+<div id="qv_modal">
+	<div class="qv_overlay"></div>
+	<div class="qv_wrapper">
+		<div class="qv_main">
+			<a href="#" id="qv_close" class="qv_close">    
+				<i class="fas fa-times"></i>
+			</a>
+			<div id="qv_content" >
 
             <!-- Content Here -->
 
