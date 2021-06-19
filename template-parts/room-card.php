@@ -4,11 +4,8 @@ global $post;
 $post_slug = $post->post_name; ?>
 
 <div class="card modalOpen hvr-grow" id="room_card" data-id="<?php the_ID(); ?>">
-    <div class="card_image">
-        <img src="<?php echo $image[0];?>" alt="<?php the_title(); ?>"/>
-    </div>
-    <div class="card_price"></div>
-    <div class="card_button">            
+    <div class="card_image image" style="background-image: url(<?php echo $image[0];?>)"></div>
+    <div class="card_price">            
         <h2><?php the_field('price'); ?> €</h2>
     </div>
     <div class="card_info hvr-sweep-to-right">

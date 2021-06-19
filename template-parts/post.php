@@ -13,8 +13,7 @@
             if($gallery[0]){        
                 foreach ($gallery[0] as $src) { ?> 
     
-                    <li class="splide__slide">
-                        <img src="<?php echo $src?>"/>
+                    <li class="splide__slide image" style="background-image: url(<?php echo $src?>)">
                     </li>
     
     <?php       }
@@ -27,7 +26,14 @@
     <?php   } else if (wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full' )) { 
             $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full' ); ?>
     <div class="post_img">
-        <img src="<?php echo $image[0];?>" alt="<?php the_title(); ?>" />
+        <div class="splide" id="post-slider">
+	        <div class="splide__track">
+		        <ul class="splide__list">
+                    <li class="splide__slide image" style="background-image: url(<?php echo $image[0];?>)">
+                    </li>
+    	        </ul>
+	        </div>
+        </div>
     </div>
     <?php } else {} ?>
     <!--  -->
@@ -41,10 +47,13 @@
             $description = $term->description;
             $id = $term->term_id;
         ?>       
-        <div class="post_feature hvr-sweep-to-right">
+        <div class="post_feature <?php if ($description ) {?>
+            hvr-sweep-to-right <?php } else {?> hvr-grow <?php }?>">
             <img title="<?php echo  $name;?>" src='<?php the_field('icon', 'facilities_'.$id );?>' alt='<?php echo  $name;?>' />
             <p><?php echo $name ;?></p>
-            <p><?php echo $description ;?></p>
+            <?php if ($description ) {?>
+                <p class="post_description"><?php echo $description ;?></p>
+            <?php }?>
         </div>
     <?php } ?>
     </div>

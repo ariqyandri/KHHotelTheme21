@@ -10,16 +10,16 @@
     ?>
 <!---->
 
+
 <!-- Booking Form -->
-    <?php
+<?php
         get_template_part('template-parts/booking-form','booking-from');
-    ?>
+        ?>
 <!---->
 
 <div class="page-content">
-
-<!-- Page Info -->
     
+    <!-- Page Info -->
     <?php
         get_template_part('template-parts/post','post');
     ?>

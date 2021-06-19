@@ -1,7 +1,7 @@
 <div id="room-slider_section">
-  <div class="room-slider_title">
+  <div class="section_title">
     <h1>Our Rooms</h1>
-    <p><a href="rooms">VIew All Rooms</a></p>
+    <p><a href="rooms">View All Rooms</a></p>
   </div>
   <div class="room-slider_box">
     <div class="splide" id="room-slider">

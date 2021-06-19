@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Sights
+ * Template Name: Transportation
  *
  * Selectable from a dropdown menu on the edit page screen.
  */
@@ -11,21 +11,6 @@
 <!-- Page Title -->
 <?php
   get_template_part('template-parts/page-header','page-header');
-?>
-<!---->
-
-<!-- Page Info -->
-<?php 
-    get_template_part('template-parts/post','post');
-?> 
-<!---->
-
-<!-- Content Margin -->
-<div class="page-content">
-
-<!-- Sights Display -->
-<?php
-    get_template_part('template-parts/sights-section','sights-section');
 ?>
 <!---->
 
@@ -48,7 +33,9 @@ $loopb = new WP_Query( array( 'post_type' =>
 <?php wp_reset_postdata();?>
 <!---->
 
-<?php wp_reset_postdata();?>
+<!-- Content Margin -->
+<div class="page-content">
+
 </div>
 <!---->
 

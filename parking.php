@@ -9,45 +9,30 @@
 <?php get_header(); ?>
 
 <!-- Page Title -->
-<div class="page-title">
-    <h1><?php the_title(); ?></h1>
-</div>
+<?php
+  get_template_part('template-parts/page-header','page-header');
+?>
 <!---->
+
+<!-- Page Info -->
+<?php
+    get_template_part('template-parts/post','post');
+?>
+<!--  -->
 
 <!-- Content Margin -->
 <div class="page-content">
 
-<!-- Page Info -->
-<?php while ( have_posts() ) : the_post(); ?>
-    <?php
-        get_template_part('template-parts/page-info','page-info');
-    ?>
-<?php endwhile;?>
-<?php wp_reset_postdata();?>
+<!-- Display Parking -->
+<?php
+  get_template_part('template-parts/parking-section','parking-section');
+?>
 <!---->
 
-
-
-<!-- Location -->
-<div class="map-display">
-  <div class="map-title">
-    <h1>Park and Ride (P+R)</h1>
-  </div>
-  <div class="display-map">
-  <?php global $post;
-    $post_slug = $post->post_name; 
-    echo $post_slug?>
-  <?php $loopb = new WP_Query( array( 'post_type' =>
-    'post', 'tax_query' => array( array( 'taxonomy' => 'category', 'field' =>
-    'slug', 'terms' => $post_slug, ) ) ) ); ?>
-  <?php while ( $loopb->have_posts() ) : $loopb->the_post();?>
-    <?php
-        get_template_part('template-parts/display-parking','parking');
-    ?>
-  <?php endwhile;?>
-  <?php wp_reset_postdata();?>
-  </div>
-</div>
+<!-- Display Location -->
+<?php
+  get_template_part('template-parts/parking-location','parking-location');
+?>
 <!---->
 
 </div>

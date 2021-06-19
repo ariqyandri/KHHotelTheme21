@@ -55,7 +55,7 @@
       qv_content.html(response);
       if (qv_content.html(response)) {
         $("#qv_modal .qv_main").addClass("show");
-        
+
         //Booking Room
         var dateToString = (date) => {
           var dd = date.getDate();
@@ -69,29 +69,99 @@
           }
           return yyyy + "-" + mm + "-" + dd;
         };
-        
+
         var stringToDate = (string) => {
           var value = string.split("-");
           return new Date(value[0], value[1] - 1, value[2]);
         };
-        
-        var editDate = (name, value) => {
-          return $(`#room_modal input[name^='${name}']`)
-            .attr("min", value)
-            .attr("value", value);
+
+        var editDate = (name, value, type) => {
+          return type == "min"
+            ? $(`#room_modal input[name^='${name}']`).attr("min", value)
+            : type == "value"
+            ? ($(`#room_modal input[name^='${name}']`).attr("value", value),
+              $(`#room_modal  .input_${name}_date`).html(""),
+              $(`#room_modal .input_${name}_date`).html(
+                `${stringToDate(value)}`.substring(0, 15)
+              ))
+            : ($(`#room_modal input[name^='${name}']`)
+                .attr("min", value)
+                .attr("value", value),
+              $(`#room_modal .input_${name}_date`).html(""),
+              $(`#room_modal .input_${name}_date`).html(
+                `${stringToDate(value)}`.substring(0, 15)
+              ));
         };
-        
+
         var today = new Date();
         editDate("start", dateToString(today));
-        
         var tomorrow = new Date(today.getTime() + 24 * 60 * 60 * 1000);
         editDate("end", dateToString(tomorrow));
 
         $("input[name^='start']").change(function () {
           var startDate = stringToDate($(this).val());
+          var curEndDate = stringToDate($("input[name^='end']").val());
           var endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
-          editDate("end", dateToString(endDate));
-          console.log(endDate)
+          editDate("start", dateToString(startDate), "value");
+          if (curEndDate <= startDate) {
+            editDate("end", dateToString(endDate));
+          } else {
+            editDate("end", dateToString(endDate), "min");
+          }
+        });
+
+        $("input[name^='end']").change(function () {
+          var endDateValue = stringToDate($(this).val());
+          editDate("end", dateToString(endDateValue), "value");
+        });
+
+        var editOffer = (value, type, available) => {
+          return (
+            type == "initial"
+              ? $(`#room_modal input[name^='offer']`).attr("value", value)
+              : $(`#room_modal input[name^='offer']`).attr("value", value),
+            $(`#room_modal .input_offer_availability`).css({
+              padding: available == false ? "0 1rem" : "",
+              borderRadius: available == false ? "1rem" : "",
+              backgroundColor: available == false ? "red" : "",
+            }),
+            $(`#room_modal .input_offer_availability`).html(""),
+            $(`#room_modal .input_offer_availability`).html(
+              available == false ? "Code Invalid" : value == "" ? "-" : "✓"
+            )
+          );
+        };
+
+        var offers = [""];
+        var availability = true;
+
+        $("#room_modal").ready(function () {
+          var data = {
+            action: "load_offer_availability_by_ajax",
+            security: blog.security,
+            type: "initial",
+          };
+          $.post(
+            blog.ajaxurl,
+            data,
+            function (response) {
+              offers = [...response, ""];
+              editOffer(offers[0], data.type, true);
+            },
+            "json"
+          );
+        });
+
+        $(".input_offer_apply").click(function () {
+          var offerCode = $("#room_modal input[name^='offer']").val();
+          availability = offers.find((offer) => {
+            return offer == `${offerCode}`;
+          });
+          if (availability == undefined) {
+            editOffer(offerCode, "", false);
+          } else {
+            editOffer(offerCode, "", true);
+          }
         });
 
         Mews.Distributor(
@@ -109,12 +179,21 @@
               })["value"];
               distributor.setStartDate(stringToDate(start));
               distributor.setEndDate(stringToDate(end));
+              coupon = results.find(({ name }) => {
+                return name == "offer";
+              })["value"];
+              if (availability == undefined) {
+                distributor.setVoucherCode("");
+              } else {
+                distributor.setVoucherCode(coupon);
+              }
               distributor.open();
-              distributor.showRates($("#room_modal").attr('room-id'));
+              distributor.showRates($("#room_modal").attr("room-id"));
             });
           }
         );
       }
     });
   });
+
 })(jQuery);

@@ -1,5 +1,5 @@
 <div id="guestbook-slider_section">
-  <div class="guestbook-slider_title">
+  <div class="section_title">
     <h1>Guestbook</h1>
   </div>
   <div class="guestbook-slider_box">

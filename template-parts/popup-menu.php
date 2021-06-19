@@ -19,6 +19,7 @@
     >
       <?php the_field('icon'); ?>
     </a>
+    
     <?php endwhile;?>
     <?php wp_reset_postdata();?>
   </menu>

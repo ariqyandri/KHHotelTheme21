@@ -22,6 +22,7 @@
         <p class="input_offer_availability"></p>
     </div>
     <div class="input_button">
-        <button type="button" class="booking-submit book-button" id="booking-<?php echo get_post_type( );?>">BOOK NOW</button>        <p>*- If offer code is Invalid or not input, it will not apply to your booking</p>
+        <button type="button" class="booking-submit book-button" id="booking-<?php echo get_post_type( );?>">BOOK NOW</button>
+        <p>*- If offer code is Invalid or not input, it will not apply to your booking</p>
     </div>
 </form>

@@ -30,21 +30,27 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-K05Y1FSWLS');
     </script>
     <!---->
 
     <!-- Splide JS -->
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
     <!--  -->
 
+    <!-- Splide JS -->
     <script src="https://www.mews.li/distributor/distributor.min.js"></script>
-
-
+    <!--  -->
+    
+    <!-- Google Maps API -->
+    <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbsKaZKm75mrBuxH2PWh2G_jyg0liQHd0&callback=initMap">
+    </script>
+    <!--  -->
+    
     <?php wp_head(); ?>
+    
   </head>
 
   <body>
