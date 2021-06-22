@@ -69,7 +69,7 @@
     editDate("end", dateToString(endDateValue), "value");
   });
 
-  var editOffer = (value, type, available) => {
+  var editOffer = (value, type, available, description) => {
     return (
       type == "initial"
         ? $(`input[name^='offer']`).attr("value", value)
@@ -78,15 +78,16 @@
         padding: available == false ? "0 1rem" : "",
         borderRadius: available == false ? "1rem" : "",
         backgroundColor: available == false ? "red" : "",
+        fontWeight: available == false ? "bold" : "",
       }),
       $(`.input_offer_availability`).html(""),
       $(`.input_offer_availability`).html(
-        available == false ? "Code Invalid" : value == "" ? "-" : "✓"
+        available == false ? "Code Invalid" : value == "" ? "-" : description
       )
     );
   };
 
-  var offers = [""];
+  var offers = [[]];
   var availability = true;
 
   $("#booking-form").ready(function () {
@@ -99,8 +100,12 @@
       blog.ajaxurl,
       data,
       function (response) {
-        offers = [...response, ""];
-        editOffer(offers[0], data.type, true);
+        offers = [...response, ["", ""]];
+        var defaultOffer = offers.find((offer) => {
+          return offer[2] == "true";
+        });
+        editOffer(defaultOffer[0], data.type, true, defaultOffer[1]);
+        console.log(defaultOffer);
       },
       "json"
     );
@@ -109,12 +114,12 @@
   $(".input_offer_apply").click(function () {
     var offerCode = $("input[name^='offer']").val();
     availability = offers.find((offer) => {
-      return offer == `${offerCode}`;
+      return offer[0] == `${offerCode}`;
     });
     if (availability == undefined) {
       editOffer(offerCode, "", false);
     } else {
-      editOffer(offerCode, "", true);
+      editOffer(offerCode, "", true, availability[1]);
     }
   });
 
@@ -148,28 +153,6 @@
   );
   //
 
-  //
-
-  $(document).ready(function () {
-    window.setTimeout(function () {
-      if (window.localStorage) {
-        // Get the expiration date of the previous popup.
-        var nextPopup = localStorage.getItem("PopUpp");
-        var now = new Date();
-        now = now.setHours(now.getHours());
-        if (nextPopup > now) {
-          return;
-        }
-        // Store the expiration date of the current popup in localStorage.
-        var expires = new Date();
-        expires = expires.setHours(expires.getHours() + 2);
-        localStorage.setItem("PopUpp", expires);
-      }
-      $("#offerModal").modal("show");
-    }, 2000);
-  });
-
-
   // Navbar
   const menu = document.querySelector(".menu-icon");
   const mobileNav = document.querySelector("#menu");
@@ -187,6 +170,9 @@
       $(".sub-menu").hide();
     }
   );
+  //
+
+  //Hide when scroll down
   var prevScrollpos = window.pageYOffset;
   window.onscroll = function () {
     var currentScrollPos = window.pageYOffset;
@@ -199,19 +185,23 @@
   };
   //
 
-  // Gallery
-  $(".wp-block-gallery").hide();
+  // Show Map in Post
+  $(".show_map").click(function () {
+    const postId = $(this).attr("post-id");
+    const map = $(`.post_img[post-id="${postId}"] iframe`);
+    map.show();
+    $(this).hide();
+  });
+  //
+
+  // Default Button
+  $(".splide .default-button").click(function () {
+    window.location = $(this).find("a").attr("href");
+    return false;
+  });
   //
 
   // Slider
-  new Splide("#post-slider", {
-    type: "fade",
-    rewind: true,
-    height: "50vh",
-    focus: "center",
-    perPage: 1,
-    autoplay: true,
-  }).mount();
   new Splide("#room-slider", {
     perPage: 3,
     trimSpace: false,
@@ -227,5 +217,4 @@
     },
   }).mount();
   //
-
 })(jQuery);

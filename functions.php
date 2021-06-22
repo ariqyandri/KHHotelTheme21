@@ -148,12 +148,10 @@ function load_offer_availability() {
     query_posts($args);
 	if( have_posts() ) :
 		while( have_posts() ): the_post();
-            array_push($response,get_field("code"));
+            array_push($response,array(get_field("code"), get_field("description"), get_field("default")));
 		endwhile;
 	endif;
     echo json_encode($response);
     die;
 }
-//
-
 //

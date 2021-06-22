@@ -23,9 +23,9 @@
 ?>
 <!---->
 
-<!-- Location -->
+<!-- Location Section -->
 <?php
-    get_template_part('template-parts/location-section','location-section');
+    get_template_part('template-parts/contact-location','location-section');
 ?>
 <!---->
 

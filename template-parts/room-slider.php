@@ -1,7 +1,7 @@
 <div id="room-slider_section">
   <div class="section_title">
     <h1>Our Rooms</h1>
-    <p><a href="rooms">View All Rooms</a></p>
+    <p><a href="<?php echo get_permalink( get_page_by_path( 'rooms' ) )?>">View All Rooms</a></p>
   </div>
   <div class="room-slider_box">
     <div class="splide" id="room-slider">

@@ -115,7 +115,7 @@
           editDate("end", dateToString(endDateValue), "value");
         });
 
-        var editOffer = (value, type, available) => {
+        var editOffer = (value, type, available, description) => {
           return (
             type == "initial"
               ? $(`#room_modal input[name^='offer']`).attr("value", value)
@@ -127,12 +127,16 @@
             }),
             $(`#room_modal .input_offer_availability`).html(""),
             $(`#room_modal .input_offer_availability`).html(
-              available == false ? "Code Invalid" : value == "" ? "-" : "✓"
+              available == false
+                ? "Code Invalid"
+                : value == ""
+                ? "-"
+                : description
             )
           );
         };
 
-        var offers = [""];
+        var offers = [[]];
         var availability = true;
 
         $("#room_modal").ready(function () {
@@ -145,8 +149,12 @@
             blog.ajaxurl,
             data,
             function (response) {
-              offers = [...response, ""];
-              editOffer(offers[0], data.type, true);
+              offers = [...response, ["", ""]];
+              var defaultOffer = offers.find((offer) => {
+                return offer[2] == "true";
+              });
+              editOffer(defaultOffer[0], data.type, true, defaultOffer[1]);
+              console.log(defaultOffer);
             },
             "json"
           );
@@ -155,12 +163,12 @@
         $(".input_offer_apply").click(function () {
           var offerCode = $("#room_modal input[name^='offer']").val();
           availability = offers.find((offer) => {
-            return offer == `${offerCode}`;
+            return offer[0] == `${offerCode}`;
           });
           if (availability == undefined) {
             editOffer(offerCode, "", false);
           } else {
-            editOffer(offerCode, "", true);
+            editOffer(offerCode, "", true, availability[1]);
           }
         });
 
@@ -195,5 +203,4 @@
       }
     });
   });
-
 })(jQuery);

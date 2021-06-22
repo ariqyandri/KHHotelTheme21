@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Our Hotel
+ * Template Name: History
  *
  * Selectable from a dropdown menu on the edit page screen.
  */
@@ -25,38 +25,41 @@
 <?php global $post;
     $post_slug = $post->post_name; ?>
 
-<!--Display Rooms-->
-<?php
-  get_template_part('template-parts/room-slider','room-slider');
-?>
-<!---->
 
 <!-- Display Gallery -->
 <div class="section_title single">
-    <h1>Discover the legacy of our hotel and the surroundings!</h1>
-    <p><a href="<?php echo get_permalink( get_page_by_path( 'history' ) )?>">Discovery our history</a></p>
+    <h1>Take a look at the past</h1>
 </div>
 
 <?php $loopb = new WP_Query( array( 'post_type' =>
 'post', 'tax_query' => array('relation' => 'AND',
 array( 'taxonomy' => 'category', 'field' =>
 'slug', 'terms' => $post_slug), array( 'taxonomy' => 'category', 'field' =>
-'slug', 'terms' => "gallery") ) ) ); ?>
-<?php while ( $loopb->have_posts() ) : $loopb->the_post();?>
-    
-        <?php
-            get_template_part('template-parts/gallery','gallery');
-        ?>
+'slug', 'terms' => "gallery") ) ) ); 
+while ( $loopb->have_posts() ) : $loopb->the_post();
 
-<?php endwhile;?>
-<?php wp_reset_postdata();?>
+    get_template_part('template-parts/gallery','gallery');
+       
+endwhile;
+wp_reset_postdata();?>
 <!---->
 
-<!-- Location Section -->
-<?php
-    get_template_part('template-parts/contact-location','location-section');
-?>
+<!-- Display Post -->
+<div class="section_title single">
+    <h1>Historical Sights to Visit!</h1>
+</div>
+
+<?php $loopb = new WP_Query( array( 'post_type' =>
+'sights', 'tax_query' => array( array( 'taxonomy' => 'sight_category', 'field' =>
+'slug', 'terms' => $post_slug, ) ) ) ); 
+while ( $loopb->have_posts() ) : $loopb->the_post();
+
+    get_template_part('template-parts/post','post');
+        
+endwhile;
+wp_reset_postdata();?>
 <!---->
+
 
 <?php
     get_footer();

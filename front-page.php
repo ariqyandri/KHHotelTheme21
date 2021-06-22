@@ -17,6 +17,7 @@
         ?>
 <!---->
 
+
 <div class="page-content">
     
     <!-- Page Info -->
@@ -38,17 +39,16 @@
 <!-- Display Post -->
 <?php global $post;
     $post_slug = $post->post_name; ?>
+    
 <?php $loopb = new WP_Query( array( 'post_type' =>
 'post', 'tax_query' => array( array( 'taxonomy' => 'category', 'field' =>
-'slug', 'terms' => $post_slug, ) ) ) ); ?>
-<?php while ( $loopb->have_posts() ) : $loopb->the_post();?>
-    
-        <?php
-            get_template_part('template-parts/post','post');
-        ?>
+'slug', 'terms' => $post_slug, ) ) ) ); 
+while ( $loopb->have_posts() ) : $loopb->the_post();
 
-<?php endwhile;?>
-<?php wp_reset_postdata();?>
+  get_template_part('template-parts/post','post');
+
+endwhile;
+wp_reset_postdata();?>
 <!---->
 
 

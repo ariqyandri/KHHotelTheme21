@@ -4,6 +4,18 @@
     <i class="far fa-comment-dots"></i>
   </a>
 
+  <button class="hubspotModalOpen">
+    <?php $loopb = new WP_Query( array( 'post_type' =>
+    'post', 'tax_query' => array( array( 'taxonomy' => 'category', 'field' =>
+    'slug', 'terms' => "hubspot", ) ) ) );
+    while ( $loopb->have_posts() ) : $loopb->the_post();
+      
+      the_field("headline");
+
+    endwhile;
+    wp_reset_postdata();?>
+  </button>
+
   <menu class="items-wrapper">
     <?php $loopb = new WP_Query( array( 'post_type' =>
     'contactinfo', 'tax_query' => array( array( 'taxonomy' => 'contacttype',

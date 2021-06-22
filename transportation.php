@@ -14,6 +14,15 @@
 ?>
 <!---->
 
+<!-- Page Info -->
+<?php
+    get_template_part('template-parts/post','post');
+?>
+<!--  -->
+
+<div class="section_title single">
+    <h1>Travel to our Hotel comfortably!</h1>
+</div>
 <!-- Display Post -->
 <?php global $post;
 $post_slug = $post->post_name; 
@@ -23,11 +32,9 @@ $loopb = new WP_Query( array( 'post_type' =>
 
 <?php while ( $loopb->have_posts() ) : $loopb->the_post();?>
     
-    <div id="<?php echo $post_slug?>" class="post-display">
-        <?php
-            get_template_part('template-parts/post','post');
-        ?>
-    </div>
+    <?php
+        get_template_part('template-parts/transportation-post','post');
+    ?>
 
 <?php endwhile;?>
 <?php wp_reset_postdata();?>

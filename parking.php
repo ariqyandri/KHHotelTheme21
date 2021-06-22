@@ -29,12 +29,6 @@
 ?>
 <!---->
 
-<!-- Display Location -->
-<?php
-  get_template_part('template-parts/parking-location','parking-location');
-?>
-<!---->
-
 </div>
 <!---->
 

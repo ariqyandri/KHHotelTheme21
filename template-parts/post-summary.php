@@ -1,5 +1,5 @@
 <?php $postID = $post->ID; ?>
-<div id="post-<?php the_field('type'); ?>" class="post">
+<div id="post-<?php the_field('type'); ?>" class="post summary">
     <!-- Image -->
     <?php   if (has_block('gallery', $post->post_content)) {    ?>
     <div class="post_img">
@@ -41,8 +41,7 @@
         ?>       
         <div class="post_feature <?php if ($description ) {?>
             hvr-sweep-to-right <?php } else {?> hvr-grow <?php }?>">
-            <!-- <img title="<?php echo  $name;?>" src='<?php the_field('icon', 'facilities_'.$id );?>' alt='<?php echo  $name;?>' /> -->
-            <div><?php the_field('icon_fa', 'facilities_'.$id );?></div>
+            <img title="<?php echo  $name;?>" src='<?php the_field('icon', 'facilities_'.$id );?>' alt='<?php echo  $name;?>' />
             <p><?php echo $name ;?></p>
             <?php if ($description ) {?>
                 <p class="post_description"><?php echo $description ;?></p>
@@ -51,29 +50,6 @@
     <?php } ?>
     </div>
     <?php } ?>
-    <!--  -->
-
-    <!-- Text -->
-    <div class="post_text  <?php if (get_the_terms( $post->ID, 'sight_category')) {?>hvr-sweep-to-right invert<?php }?>">
-        <div class="post_text-box">
-            <?php if (get_the_terms( $post->ID, 'sight_category')) {?>
-                <a href="<?php the_field('website_link'); ?>"
-                rel="noreferrer"
-                target="_blank">
-                    <h1><?php the_field('header'); ?></h1>
-                </a>
-                <a href="<?php the_field('address_link'); ?>"
-                rel="noreferrer"
-                target="_blank">
-                    <h2><?php the_field('header_second'); ?></h2>
-                </a>
-            <?php } else {?>
-                <h1><?php the_field('header'); ?></h1>
-                <h2><?php the_field('header_second'); ?></h2>
-            <?php }?>
-            <?php the_content(); ?>
-        </div>
-    </div>
     <!--  -->
     <script>
         new Splide(".post-<?php echo $postID; ?>", {
